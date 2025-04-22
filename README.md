@@ -1,5 +1,3 @@
----
-
 # 🎯 Sentiment Analysis of YouTube Comments  
 > Predicting Positive vs. Negative Reactions Using NLP and ML Models
 
