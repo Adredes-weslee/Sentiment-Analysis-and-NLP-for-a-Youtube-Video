@@ -1,24 +1,12 @@
-"""Enhanced configuration for production deployment with automatic environment detection."""
+"""Enhanced configuration for production deployment with optional API keys."""
 from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Load environment variables from .env file (if it exists)
 PROJECT_ROOT = Path(__file__).parent.parent
 env_path = PROJECT_ROOT / '.env'
 load_dotenv(dotenv_path=env_path)
-
-# API Configuration - Properly loads from .env
-YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
-if not YOUTUBE_API_KEY or YOUTUBE_API_KEY == "your_key_here":
-    raise ValueError(
-        "YouTube API key not found! Please:\n"
-        "1. Copy .env.template to .env\n"
-        "2. Add your actual YouTube API key to the .env file\n"
-        "3. Get your key from: https://console.cloud.google.com/"
-    )
-
-VIDEO_ID = "kffacxfA7G4"  # Justin Bieber - Baby
 
 # Data Paths
 RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
@@ -34,6 +22,22 @@ def is_streamlit_cloud():
         os.getenv("HOSTNAME", "").startswith("streamlit-") or  # Streamlit Cloud hostname pattern
         "streamlit.app" in os.getenv("STREAMLIT_SERVER_ADDRESS", "")  # Streamlit Cloud domain
     )
+
+# API Configuration - OPTIONAL for dashboard usage
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+VIDEO_ID = "kffacxfA7G4"  # Justin Bieber - Baby
+
+# Only require API key for data collection scripts, not dashboard
+def validate_api_key_for_collection():
+    """Validate API key only when needed for data collection."""
+    if not YOUTUBE_API_KEY or YOUTUBE_API_KEY == "your_key_here":
+        raise ValueError(
+            "YouTube API key not found! Please:\n"
+            "1. Copy .env.template to .env\n"
+            "2. Add your actual YouTube API key to the .env file\n"
+            "3. Get your key from: https://console.cloud.google.com/"
+        )
+    return YOUTUBE_API_KEY
 
 # Model Configuration with Environment Detection
 if is_streamlit_cloud():
