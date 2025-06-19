@@ -1,40 +1,36 @@
-# Enhanced 1_Sentiment_Classifier.py
-"""Advanced sentiment classification interface."""
+"""Enhanced Sentiment Classifier page with optional API dependency."""
 import streamlit as st
-import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
+import plotly.express as px
+import sys
+import pandas as pd
+from pathlib import Path
 from datetime import datetime
 import sys
-from pathlib import Path
 
-# Add project root to path
+
+# Add project root to Python path
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.text_processing import SentimentAnalyzer
-from src.config import HUGGING_FACE_MODEL, CONFIDENCE_THRESHOLD
+from src.config import HUGGING_FACE_MODEL, CONFIDENCE_THRESHOLD  # Only import what we need
 
 st.set_page_config(
-    page_title="Sentiment Classifier", 
+    page_title="Sentiment Classifier",
     page_icon="🎯",
     layout="wide"
 )
 
-# Initialize the analyzer
-@st.cache_resource
-def load_analyzer():
-    """Load and cache the sentiment analyzer."""
-    return SentimentAnalyzer(HUGGING_FACE_MODEL)
+st.title("🎯 Advanced Sentiment Classifier")
+st.markdown("Real-time sentiment analysis using state-of-the-art transformer models")
 
-analyzer = load_analyzer()
+# Initialize the analyzer (no API key needed)
+if 'analyzer' not in st.session_state:
+    with st.spinner("🚀 Initializing sentiment analyzer..."):
+        st.session_state.analyzer = SentimentAnalyzer(HUGGING_FACE_MODEL)
 
-# Main interface
-st.title("🎯 Advanced Sentiment Analysis")
-st.markdown("""
-This tool uses state-of-the-art transformer models to analyze sentiment.
-Enter text below to get detailed predictions with confidence scores.
-""")
+analyzer = st.session_state.analyzer
 
 # Sidebar with model info
 with st.sidebar:
