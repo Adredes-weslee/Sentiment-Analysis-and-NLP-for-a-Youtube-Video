@@ -318,7 +318,7 @@ If you use this project in your research, please cite:
   title={Advanced YouTube Comment Sentiment Analysis Platform},
   author={Wes Lee},
   year={2025},
-  url={https://github.com/Adredes-weslee/youtube-sentiment-analysis},
+  url={https://github.com/Adredes-weslee/Sentiment-Analysis-and-NLP-for-a-Youtube-Video},
   note={Comprehensive NLP pipeline with transformer models and interactive dashboard}
 }
 ```
