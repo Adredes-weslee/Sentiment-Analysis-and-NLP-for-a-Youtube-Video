@@ -14,15 +14,22 @@ def main():
     """Main function to run the data collection."""
     print("--- Starting Data Collection Pipeline ---")
     
+    # Validate API key only when collecting data
+    try:
+        api_key = config.validate_api_key_for_collection()
+    except ValueError as e:
+        print(f"❌ {e}")
+        return
+    
     # Ensure data directory exists
     config.RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
     output_path = config.RAW_DATA_DIR / config.RAW_COMMENTS_FILE
     
     # Collect comments with incremental saving
     comments = get_youtube_comments(
-        config.YOUTUBE_API_KEY, 
+        api_key,  # Use validated API key
         config.VIDEO_ID, 
-        output_path=output_path  # Pass output path for incremental saves
+        output_path=output_path
     )
     
     if comments:
