@@ -1,8 +1,8 @@
 # Advanced YouTube Comment Sentiment Analysis Platform
 
-A Streamlit-based YouTube comment sentiment app centered on Justin Bieber's `"Baby"` video, with committed raw and processed CSVs containing 114,109 comments.
+A Streamlit-based YouTube comment sentiment app centered on Justin Bieber's `"Baby"` video, with committed raw and processed CSVs covering roughly 114K comments.
 
-The shipped UI is a three-page dashboard with a sentiment classifier, dataset explorer, and research overview.
+The shipped UI combines a live transformer-based sentiment classifier, a dataset explorer, and a notebook-derived research overview.
 
 <!-- README_SURFACE_START -->
 ```mermaid
@@ -65,7 +65,7 @@ See [Setup and Run](#setup-and-run) for the full environment and verification pa
 ## Setup and Run
 
 1. Prefer `environment.yaml` if you want the full repo to work; `requirements.txt` is not complete for every import used by the scripts and dashboard pages.
-2. Copy `.env.template` to `.env` and set `YOUTUBE_API_KEY` only if you plan to collect fresh data; the dashboard can run from the committed CSVs without.
+2. Copy `.env.template` to `.env` and set `YOUTUBE_API_KEY` only if you plan to collect fresh data; the dashboard can run from the committed CSVs without recollecting comments.
 3. Run `python scripts/run_preprocessing.py`, then `python scripts/run_dashboard.py`; run `python scripts/run_data_collection.py` only for new API pulls.
 
 ## Core Workflows
