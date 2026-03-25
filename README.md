@@ -4,6 +4,22 @@ A Streamlit-based YouTube comment sentiment app centered on Justin Bieber's `"Ba
 
 The shipped UI is a three-page dashboard with a sentiment classifier, dataset explorer, and research overview.
 
+<!-- README_SURFACE_START -->
+![Python](https://img.shields.io/badge/Python-NLP_App-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![Transformers](https://img.shields.io/badge/Transformers-Hugging_Face-FFD21E?style=flat-square)
+
+[![Portfolio Article](https://img.shields.io/badge/Portfolio%20Article-102A43?style=flat-square)](https://adredes-weslee.github.io/nlp/machine-learning/transformers/2024/12/15/building-youtube-comment-sentiment-analyzer.html) [![Live Demo](https://img.shields.io/badge/Live%20Demo-FF8B2B?style=flat-square)](https://adredes-weslee-sentiment-analysis-and-nlp-f-dashboardapp-kqphrr.streamlit.app/)
+## Quickstart
+
+```bash
+copy .env.template .env  # or cp .env.template .env
+python scripts/run_preprocessing.py
+python scripts/run_dashboard.py
+```
+
+See [Setup and Run](#setup-and-run) for the full environment and verification path.
+
+<!-- README_SURFACE_END -->
+
 ## Why This Repository Exists
 
 - Turn a large comment corpus into something a user can inspect, label, and compare for audience reaction analysis and sentiment review.
