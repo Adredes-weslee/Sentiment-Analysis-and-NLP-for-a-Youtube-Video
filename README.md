@@ -1,6 +1,6 @@
 # Advanced YouTube Comment Sentiment Analysis Platform
 
-A Streamlit-based YouTube comment sentiment app centered on Justin Bieber's `"Baby"` video, with committed raw and processed CSVs covering roughly 114K comments.
+A Streamlit-based YouTube comment sentiment demo centered on Justin Bieber's `"Baby"` video, with committed raw and processed CSVs covering roughly 114K comments and a landing page that clearly separates live inference, corpus exploration, and archived research notes.
 
 The shipped UI combines a live transformer-based sentiment classifier, a dataset explorer, and a notebook-derived research overview.
 
@@ -25,6 +25,12 @@ flowchart LR
 
 ![Python](https://img.shields.io/badge/Python-NLP_App-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![Transformers](https://img.shields.io/badge/Transformers-Hugging_Face-FFD21E?style=flat-square)
 
+## Interface Preview
+
+The first screen is now framed as a three-surface demo: live sentiment scoring, committed dataset exploration, and notebook-era research context.
+
+![Interface preview](docs/screenshots/app-overview.png)
+
 ## Quickstart
 
 ```bash
@@ -32,6 +38,8 @@ copy .env.template .env  # or cp .env.template .env
 python scripts/run_preprocessing.py
 python scripts/run_dashboard.py
 ```
+
+Open the app by starting with **Sentiment Classifier** in the sidebar, then move to **Dataset Explorer** for the committed corpus and **Research Overview** for the archived modeling notes.
 
 See [Setup and Run](#setup-and-run) for the full environment and verification path.
 

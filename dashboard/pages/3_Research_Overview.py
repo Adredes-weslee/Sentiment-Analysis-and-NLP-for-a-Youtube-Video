@@ -4,14 +4,47 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+from pathlib import Path
 
 st.set_page_config(page_title="Research Overview", page_icon="🔬", layout="wide")
 
+
+@st.cache_data
+def load_committed_dataset():
+    root = Path(__file__).resolve().parents[2]
+    processed_path = root / "data" / "processed" / "processed_comments.csv"
+    raw_path = root / "data" / "raw" / "youtube_comments.csv"
+    for candidate in (processed_path, raw_path):
+        if candidate.exists():
+            return pd.read_csv(candidate)
+    return None
+
+
+dataset_df = load_committed_dataset()
+current_total = len(dataset_df) if dataset_df is not None else None
+current_distribution = None
+if dataset_df is not None and "sentiment" in dataset_df.columns:
+    current_distribution = (
+        dataset_df["sentiment"]
+        .astype(str)
+        .str.strip()
+        .str.lower()
+        .value_counts()
+        .rename_axis("Class")
+        .reset_index(name="Count")
+    )
+
 st.title("🔬 Research Methodology & Findings")
 st.markdown("""
-This page summarizes the comprehensive research conducted for this sentiment analysis project.
-All findings are based on extensive notebook analysis comparing multiple approaches.
+This page summarizes the notebook-era modeling work behind the project.
+The live dashboard uses the committed CSV corpus and a transformer-powered classifier, while the tables below preserve the earlier research comparisons as an archived experiment record.
 """)
+
+if current_total is not None:
+    st.info(
+        f"The committed dashboard dataset currently contains {current_total:,} comments. "
+        "Use the Dataset Explorer for live corpus inspection; treat the figures on this page as research snapshots."
+    )
 
 # Methodology overview
 st.subheader("📋 Research Methodology")
@@ -20,22 +53,22 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("""
     **Data Collection & Processing:**
-    - YouTube API integration (99,941 initial comments)
-    - Language filtering (English only)
-    - Duplicate removal (13,854 duplicates found)
+    - YouTube API collection from the target video plus replies
+    - Notebook-era filtering and cleanup experiments
+    - Duplicate removal and text normalization
     - Text cleaning & normalization
     - Emoji handling & URL removal
-    - Final dataset: 63,036 comments
+    - Committed CSVs provide the current dashboard corpus
     """)
 
 with col2:
     st.markdown("""
     **Target Label Creation:**
-    - VADER sentiment analysis
-    - Flair pre-trained model (IMDB)
-    - Hugging Face BART-large-mnli
-    - Ensemble approach (mean of 3 methods)
-    - Final split: 75% positive, 25% negative
+    - VADER sentiment analysis for bootstrap labeling
+    - Notebook comparisons across multiple pre-trained models
+    - Transformer inference for the live classifier page
+    - Ensemble experiments documented in the notebook
+    - Binary positive/negative labels in the committed dashboard data
     """)
 
 # Label Creation Performance
@@ -155,14 +188,17 @@ with st.expander("🔧 Best Parameters Found"):
 # Class imbalance impact
 st.subheader("⚖️ Class Imbalance Analysis")
 
-imbalance_data = pd.DataFrame({
-    'Class': ['Positive Comments', 'Negative Comments'],
-    'Count': [47408, 15628],
-    'Percentage': [75.2, 24.8]
-})
+if current_distribution is not None and not current_distribution.empty:
+    imbalance_data = current_distribution.copy()
+    imbalance_data["Class"] = imbalance_data["Class"].str.title() + " Comments"
+else:
+    imbalance_data = pd.DataFrame({
+        'Class': ['Positive Comments', 'Negative Comments'],
+        'Count': [47408, 15628],
+    })
 
 fig_imbalance = px.pie(imbalance_data, values='Count', names='Class', 
-                      title="Final Dataset Class Distribution")
+                      title="Committed Dashboard Dataset Class Distribution")
 st.plotly_chart(fig_imbalance, use_container_width=True)
 
 # Future recommendations
