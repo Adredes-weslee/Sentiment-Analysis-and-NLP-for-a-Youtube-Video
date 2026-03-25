@@ -5,9 +5,26 @@ A Streamlit-based YouTube comment sentiment app centered on Justin Bieber's `"Ba
 The shipped UI is a three-page dashboard with a sentiment classifier, dataset explorer, and research overview.
 
 <!-- README_SURFACE_START -->
-![Python](https://img.shields.io/badge/Python-NLP_App-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![Transformers](https://img.shields.io/badge/Transformers-Hugging_Face-FFD21E?style=flat-square)
+```mermaid
+flowchart LR
+  YT["YouTube Data API v3<br/>video kffacxfA7G4"] --> COL["src/data_collection.py<br/>scripts/run_data_collection.py"]
+  COL --> RAW["data/raw/youtube_comments.csv"]
+  RAW --> PRE["scripts/run_preprocessing.py<br/>clean_text + apply_vader_sentiment"]
+  PRE --> PROC["data/processed/processed_comments.csv"]
+
+  APP["dashboard/app.py"] --> CLS["Sentiment Classifier<br/>dashboard/pages/1_Sentiment_Classifier.py"]
+  APP --> EXP["Dataset Explorer<br/>dashboard/pages/2_Dataset_Explorer.py"]
+  APP --> RES["Research Overview<br/>dashboard/pages/3_Research_Overview.py"]
+
+  TXT["src/text_processing.py<br/>src/config.py"] --> CLS
+  PROC --> EXP
+  NB["notebooks/project_3_cleaning_eda_modeling.ipynb<br/>EDA + model findings"] --> RES
+```
 
 [![Portfolio Article](https://img.shields.io/badge/Portfolio%20Article-102A43?style=flat-square)](https://adredes-weslee.github.io/nlp/machine-learning/transformers/2024/12/15/building-youtube-comment-sentiment-analyzer.html) [![Live Demo](https://img.shields.io/badge/Live%20Demo-FF8B2B?style=flat-square)](https://adredes-weslee-sentiment-analysis-and-nlp-f-dashboardapp-kqphrr.streamlit.app/)
+
+![Python](https://img.shields.io/badge/Python-NLP_App-3776AB?style=flat-square&logo=python&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white) ![Transformers](https://img.shields.io/badge/Transformers-Hugging_Face-FFD21E?style=flat-square)
+
 ## Quickstart
 
 ```bash
